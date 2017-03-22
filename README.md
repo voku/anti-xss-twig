@@ -1,9 +1,8 @@
 [![Build Status](https://travis-ci.org/voku/anti-xss-twig.svg?branch=master)](https://travis-ci.org/voku/anti-xss-twig)
 [![Coverage Status](https://coveralls.io/repos/github/voku/anti-xss-twig/badge.svg?branch=master)](https://coveralls.io/github/voku/anti-xss-twig?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/anti-xss-twig/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/anti-xss-twig/?branch=master)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0497e1f5be2d43a08c0a108dc7192287)](https://www.codacy.com/app/voku/anti-xss-twig?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=voku/anti-xss-twig&amp;utm_campaign=Badge_Grade)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/40d6318a-64fc-4927-8438-c57b0f546949/mini.png)](https://insight.sensiolabs.com/projects/40d6318a-64fc-4927-8438-c57b0f546949)
-[![Latest Stable Version](https://poser.pugx.org/voku/anti-xss-twig/v/stable)](https://packagist.org/packages/voku/anti-xss-twig) 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c6e5213d2fc0421fa0923c992b6035c1)](https://www.codacy.com/app/voku/anti-xss-twig?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=voku/anti-xss-twig&amp;utm_campaign=Badge_Grade)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7841fd87-ea3e-4ce2-9be8-e0100fbc1c25/mini.png)](https://insight.sensiolabs.com/projects/7841fd87-ea3e-4ce2-9be8-e0100fbc1c25)[![Latest Stable Version](https://poser.pugx.org/voku/anti-xss-twig/v/stable)](https://packagist.org/packages/voku/anti-xss-twig) 
 [![Total Downloads](https://poser.pugx.org/voku/anti-xss-twig/downloads)](https://packagist.org/packages/voku/anti-xss-twig) 
 [![Latest Unstable Version](https://poser.pugx.org/voku/anti-xss-twig/v/unstable)](https://packagist.org/packages/voku/anti-xss-twig)
 [![License](https://poser.pugx.org/voku/anti-xss-twig/license)](https://packagist.org/packages/voku/anti-xss-twig)
@@ -26,7 +25,6 @@ Currently supported Twig features are:
 * [Installation](#installation)
 * [Usage](#usage)
 * [History](#history)
-* [License](#license)
 
 ## Installation
 
