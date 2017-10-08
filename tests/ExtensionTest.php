@@ -11,10 +11,11 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
   /**
    * @return array
    */
-  public function htmlProvider()
+  public function htmlWithStylesProvider()
   {
     $original = '<a style="color: red;" href=\"\u0001java\u0003script:alert(1)\">CLICK<a>';
-    $cleanHtml = '<a >CLICK<a>';
+    $cleanHtmlTag = '<a style="color: red;">CLICK<a>';
+    $cleanHtml = '<a style="color: red;" href="">CLICK<a>';
 
     $testData = array();
     $testMethods = array(
@@ -27,7 +28,34 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
       $testData[$testMethod] = array(
           str_replace('%s', $original, $testTemplate),
           $original,
-          $cleanHtml,
+          ($testMethod === 'Twig tag' ? $cleanHtmlTag : $cleanHtml),
+      );
+    }
+
+    return $testData;
+  }
+
+  /**
+   * @return array
+   */
+  public function htmlProvider()
+  {
+    $original = '<a style="color: red;" href=\"\u0001java\u0003script:alert(1)\">CLICK<a>';
+    $cleanHtmlTag = '<a >CLICK<a>';
+    $cleanHtml = '<a  href="">CLICK<a>';
+
+    $testData = array();
+    $testMethods = array(
+        'Twig tag'      => '{% xss_clean %}%s{% end_xss_clean %}',
+        'Twig function' => "{{ xss_clean('%s') }}",
+        'Twig filter'   => "{{ '%s' | xss_clean }}",
+    );
+
+    foreach ($testMethods as $testMethod => $testTemplate) {
+      $testData[$testMethod] = array(
+          str_replace('%s', $original, $testTemplate),
+          $original,
+          ($testMethod === 'Twig tag' ? $cleanHtmlTag : $cleanHtml),
       );
     }
 
@@ -51,19 +79,19 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
   }
 
   /**
-   * @dataProvider htmlProvider
+   * @dataProvider htmlWithStylesProvider
    *
    * @param $template
+   * @param $original
+   * @param $cleanHtml
    */
-  public function testAntiXssKeepStyles($template)
+  public function testAntiXssKeepStyles($template, $original, $cleanHtml)
   {
     $loader = new \Twig_Loader_Array(array('test' => $template));
     $twig = new \Twig_Environment($loader, array('debug' => true));
     $antiXss = new AntiXSS();
     $antiXss->removeEvilAttributes(array('style')); // allow style-attributes
     $twig->addExtension(new AntiXssExtension($antiXss));
-
-    // Assert no AntiXSS took place
-    static::assertSame('<a style="color: red;">CLICK<a>', $twig->render('test'));
+    static::assertSame($cleanHtml, $twig->render('test'));
   }
 }
