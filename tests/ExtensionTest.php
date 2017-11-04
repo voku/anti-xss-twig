@@ -40,8 +40,9 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
    */
   public function htmlProvider()
   {
+    $originalTag = '<a style="color: red;" href=\"\u0001java\u0003script:alert(1)\">CLICK<a><p>lall</p> \'Hello, i try to <script>alert(\'Hack\');</script> your site" ads="onClick();" 555-666-0606" K696=TobD([!+!]) ody=\"\'';
     $original = '<a style="color: red;" href=\"\u0001java\u0003script:alert(1)\">CLICK<a>';
-    $cleanHtmlTag = '<a >CLICK<a>';
+    $cleanHtmlTag = '<a >CLICK<a><p>lall</p> \'Hello, i try to alert&#40;\'Hack\'&#41;; your site" ads="TobD([!+!]) ody=\"\'';
     $cleanHtml = '<a  href="">CLICK<a>';
 
     $testData = array();
@@ -52,8 +53,11 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     );
 
     foreach ($testMethods as $testMethod => $testTemplate) {
+      $test = str_replace('%s', $original, $testTemplate);
+      $testTag = str_replace('%s', $originalTag, $testTemplate);
+
       $testData[$testMethod] = array(
-          str_replace('%s', $original, $testTemplate),
+          ($testMethod === 'Twig tag' ? $testTag : $test),
           $original,
           ($testMethod === 'Twig tag' ? $cleanHtmlTag : $cleanHtml),
       );
