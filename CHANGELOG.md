@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.0.0] - 2017-11-19
+### Changed
+- drop support for PHP < 7.0
+- use "strict_types"
+
 ## [1.0.0] - 2017-03-22
 ### Changed
 - init 
