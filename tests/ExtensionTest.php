@@ -6,7 +6,7 @@ use voku\twig\AntiXssExtension;
 /**
  * Class ExtensionTest
  */
-class ExtensionTest extends \PHPUnit_Framework_TestCase
+class ExtensionTest extends \PHPUnit\Framework\TestCase
 {
   /**
    * @return array
@@ -17,19 +17,19 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     $cleanHtmlTag = '<a style="color: red;">CLICK<a>';
     $cleanHtml = '<a style="color: red;" href="">CLICK<a>';
 
-    $testData = array();
-    $testMethods = array(
+    $testData = [];
+    $testMethods = [
         'Twig tag'      => '{% xss_clean %}%s{% end_xss_clean %}',
         'Twig function' => "{{ xss_clean('%s') }}",
         'Twig filter'   => "{{ '%s' | xss_clean }}",
-    );
+    ];
 
     foreach ($testMethods as $testMethod => $testTemplate) {
-      $testData[$testMethod] = array(
+      $testData[$testMethod] = [
           str_replace('%s', $original, $testTemplate),
           $original,
           ($testMethod === 'Twig tag' ? $cleanHtmlTag : $cleanHtml),
-      );
+      ];
     }
 
     return $testData;
@@ -45,22 +45,22 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
     $cleanHtmlTag = '<a >CLICK<a><p>lall</p> \'Hello, i try to alert&#40;\'Hack\'&#41;; your site" ads="TobD([!+!]) ody=\"\'';
     $cleanHtml = '<a  href="">CLICK<a>';
 
-    $testData = array();
-    $testMethods = array(
+    $testData = [];
+    $testMethods = [
         'Twig tag'      => '{% xss_clean %}%s{% end_xss_clean %}',
         'Twig function' => "{{ xss_clean('%s') }}",
         'Twig filter'   => "{{ '%s' | xss_clean }}",
-    );
+    ];
 
     foreach ($testMethods as $testMethod => $testTemplate) {
       $test = str_replace('%s', $original, $testTemplate);
       $testTag = str_replace('%s', $originalTag, $testTemplate);
 
-      $testData[$testMethod] = array(
+      $testData[$testMethod] = [
           ($testMethod === 'Twig tag' ? $testTag : $test),
           $original,
           ($testMethod === 'Twig tag' ? $cleanHtmlTag : $cleanHtml),
-      );
+      ];
     }
 
     return $testData;
@@ -75,7 +75,7 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
    */
   public function testExtensionMethod($template, $original, $cleanHtml)
   {
-    $loader = new \Twig_Loader_Array(array('test' => $template));
+    $loader = new \Twig_Loader_Array(['test' => $template]);
     $twig = new \Twig_Environment($loader);
     $antiXss = new AntiXSS();
     $twig->addExtension(new AntiXssExtension($antiXss));
@@ -91,10 +91,10 @@ class ExtensionTest extends \PHPUnit_Framework_TestCase
    */
   public function testAntiXssKeepStyles($template, $original, $cleanHtml)
   {
-    $loader = new \Twig_Loader_Array(array('test' => $template));
-    $twig = new \Twig_Environment($loader, array('debug' => true));
+    $loader = new \Twig_Loader_Array(['test' => $template]);
+    $twig = new \Twig_Environment($loader, ['debug' => true]);
     $antiXss = new AntiXSS();
-    $antiXss->removeEvilAttributes(array('style')); // allow style-attributes
+    $antiXss->removeEvilAttributes(['style']); // allow style-attributes
     $twig->addExtension(new AntiXssExtension($antiXss));
     static::assertSame($cleanHtml, $twig->render('test'));
   }
