@@ -15,7 +15,7 @@ A [Twig](http://twig.sensiolabs.org/) extension for [voku/anti-xss](https://gith
 
 Currently supported Twig features are:
 
-* Tag
+* Tag (*recommended*)
     * `{% xss_clean %} <foo>bar</foo> {% end_xss_clean %}`
 * Function
     * `{{ xss_clean(' <foo>bar</foo>') }}`
@@ -52,8 +52,6 @@ Then use it in your templates:
 
 ```
 {% xss_clean %} <foo>bar</foo> {% end_xss_clean %}
-{{ xss_clean(' <foo>bar</foo>') }}
-{{ '<foo>bar</foo>' | xss_clean }}
 ```
 
 ```php

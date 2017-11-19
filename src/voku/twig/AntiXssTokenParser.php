@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace voku\twig;
 
 use Twig_Token;
@@ -15,13 +17,13 @@ class AntiXssTokenParser extends Twig_TokenParser
    *
    * @return bool
    */
-  public function decideAntiXssEnd(Twig_Token $token)
+  public function decideAntiXssEnd(Twig_Token $token): bool
   {
     return $token->test('end_xss_clean');
   }
 
   /** @noinspection PhpMissingParentCallCommonInspection */
-  public function getTag()
+  public function getTag(): string
   {
     return 'xss_clean';
   }
@@ -31,15 +33,15 @@ class AntiXssTokenParser extends Twig_TokenParser
    *
    * @return AntiXssNode
    */
-  public function parse(Twig_Token $token)
+  public function parse(Twig_Token $token): AntiXssNode
   {
     $lineNumber = $token->getLine();
     $stream = $this->parser->getStream();
     $stream->expect(Twig_Token::BLOCK_END_TYPE);
-    $body = $this->parser->subparse(array($this, 'decideAntiXssEnd'), true);
+    $body = $this->parser->subparse([$this, 'decideAntiXssEnd'], true);
     $stream->expect(Twig_Token::BLOCK_END_TYPE);
-    $nodes = array('body' => $body);
+    $nodes = ['body' => $body];
 
-    return new AntiXssNode($nodes, array(), $lineNumber, $this->getTag());
+    return new AntiXssNode($nodes, [], $lineNumber, $this->getTag());
   }
 }

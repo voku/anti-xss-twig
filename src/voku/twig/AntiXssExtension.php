@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace voku\twig;
 
 use voku\helper\AntiXSS;
@@ -12,10 +14,10 @@ class AntiXssExtension extends \Twig_Extension
   /**
    * @var array
    */
-  private $options = array(
-      'is_safe'           => array('html'),
+  private $options = [
+      'is_safe'           => ['html'],
       'needs_environment' => false,
-  );
+  ];
 
   /**
    * @var callable
@@ -35,7 +37,7 @@ class AntiXssExtension extends \Twig_Extension
   public function __construct(AntiXSS $antiXss)
   {
     $this->antiXss = $antiXss;
-    $this->callable = array($this, 'xss_clean');
+    $this->callable = [$this, 'xss_clean'];
   }
 
   /**
@@ -52,26 +54,26 @@ class AntiXssExtension extends \Twig_Extension
   /**
    * @return array
    */
-  public function getFilters()
+  public function getFilters(): array
   {
-    return array(
+    return [
         new \Twig_SimpleFilter('xss_clean', $this->callable, $this->options),
-    );
+    ];
   }
 
   /** @noinspection PhpMissingParentCallCommonInspection */
-  public function getFunctions()
+  public function getFunctions(): array
   {
-    return array(
+    return [
         new \Twig_SimpleFunction('xss_clean', $this->callable, $this->options),
-    );
+    ];
   }
 
   /** @noinspection PhpMissingParentCallCommonInspection */
-  public function getTokenParsers()
+  public function getTokenParsers(): array
   {
-    return array(
+    return [
         new AntiXssTokenParser(),
-    );
+    ];
   }
 }
