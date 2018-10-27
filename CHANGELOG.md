@@ -4,6 +4,11 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.0.1] - 2018-10-28
+### Changed
+- update AntiXSS from v4.0 -> v4.1
+
+
 ## [3.0.0] - 2017-12-23
 ### Changed
 - update AntiXSS from v3 -> v4
