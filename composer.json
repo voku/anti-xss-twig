@@ -23,7 +23,7 @@
   },
   "require": {
     "php": ">=7.0.0",
-    "voku/anti-xss": "~4.0",
+    "voku/anti-xss": "~4.1",
     "twig/twig": "^1.26|~2.0"
   },
   "require-dev": {
