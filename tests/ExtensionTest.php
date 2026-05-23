@@ -81,11 +81,6 @@ class ExtensionTest extends \PHPUnit\Framework\TestCase
     static::assertSame($cleanHtml, $twig->render('test'));
   }
 
-  /**
-   * @param string $template
-   * @param string $original
-   * @param string $cleanHtml
-   */
   #[DataProvider('htmlWithStylesProvider')]
   public function testAntiXssKeepStyles(string $template, string $original, string $cleanHtml): void
   {

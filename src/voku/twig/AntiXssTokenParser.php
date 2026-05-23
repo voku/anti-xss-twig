@@ -12,9 +12,6 @@ use Twig\TokenParser\AbstractTokenParser;
  */
 class AntiXssTokenParser extends AbstractTokenParser
 {
-  /**
-   * @param Token $token
-   */
   public function decideAntiXssEnd(Token $token): bool
   {
     return $token->test('end_xss_clean');
@@ -26,9 +23,6 @@ class AntiXssTokenParser extends AbstractTokenParser
     return 'xss_clean';
   }
 
-  /**
-   * @param Token $token
-   */
   public function parse(Token $token): AntiXssNode
   {
     $lineNumber = $token->getLine();

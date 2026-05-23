@@ -14,11 +14,6 @@ class AntiXssNode extends Node
 {
   /**
    * AntiXssNode constructor.
-   *
-   * @param array $nodes
-   * @param array $attributes
-   * @param int $lineno
-   * @param string|null $tag
    */
   public function __construct(array $nodes = [], array $attributes = [], int $lineno = 0, ?string $tag = null)
   {
@@ -26,9 +21,6 @@ class AntiXssNode extends Node
   }
 
   /** @noinspection PhpMissingParentCallCommonInspection */
-  /**
-   * @param Compiler $compiler
-   */
   public function compile(Compiler $compiler): void
   {
     $compiler
