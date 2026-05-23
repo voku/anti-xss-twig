@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/voku/anti-xss-twig.svg?branch=master)](https://travis-ci.org/voku/anti-xss-twig)
+[![CI](https://github.com/voku/anti-xss-twig/actions/workflows/ci.yml/badge.svg)](https://github.com/voku/anti-xss-twig/actions/workflows/ci.yml)
 [![Coverage Status](https://coveralls.io/repos/github/voku/anti-xss-twig/badge.svg?branch=master)](https://coveralls.io/github/voku/anti-xss-twig?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/anti-xss-twig/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/anti-xss-twig/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c6e5213d2fc0421fa0923c992b6035c1)](https://www.codacy.com/app/voku/anti-xss-twig?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=voku/anti-xss-twig&amp;utm_campaign=Badge_Grade)
@@ -42,8 +42,9 @@ First register the extension with Twig:
 ```php
 use voku\helper\AntiXSS;
 use voku\twig\AntiXssExtension;
+use Twig\Environment;
 
-$twig = new Twig_Environment($loader);
+$twig = new Environment($loader);
 $antiXss = new AntiXSS();
 $twig->addExtension(new AntiXssExtension($antiXss));
 ```

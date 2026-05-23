@@ -4,37 +4,38 @@ declare(strict_types=1);
 
 namespace voku\twig;
 
-use Twig_Node;
+use Twig\Compiler;
+use Twig\Node\Node;
 
 /**
  * Class AntiXssNode
  */
-class AntiXssNode extends Twig_Node
+class AntiXssNode extends Node
 {
   /**
    * AntiXssNode constructor.
    *
    * @param array $nodes
    * @param array $attributes
-   * @param int   $lineno
-   * @param null  $tag
+   * @param int $lineno
+   * @param string|null $tag
    */
-  public function __construct(array $nodes = [], array $attributes = [], $lineno = 0, $tag = null)
+  public function __construct(array $nodes = [], array $attributes = [], int $lineno = 0, ?string $tag = null)
   {
     parent::__construct($nodes, $attributes, $lineno, $tag);
   }
 
   /** @noinspection PhpMissingParentCallCommonInspection */
   /**
-   * @param \Twig_Compiler $compiler
+   * @param Compiler $compiler
    */
-  public function compile(\Twig_Compiler $compiler)
+  public function compile(Compiler $compiler): void
   {
     $compiler
         ->addDebugInfo($this)
         ->write("ob_start();\n")
         ->subcompile($this->getNode('body'))
-        ->write('$extension = $this->env->getExtension(\'\\voku\\twig\\AntiXssExtension\');' . "\n")
+        ->write('$extension = $this->env->getExtension(\'' . AntiXssExtension::class . '\');' . "\n")
         ->write('echo $extension->xss_clean(ob_get_clean());' . "\n");
   }
 }
