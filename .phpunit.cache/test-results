@@ -1,1 +1,0 @@
-{"version":2,"defects":[],"times":{"ExtensionTest::testExtensionMethod#Twig tag":0.022,"ExtensionTest::testExtensionMethod#Twig function":0.004,"ExtensionTest::testExtensionMethod#Twig filter":0.003,"ExtensionTest::testAntiXssKeepStyles#Twig tag":0.003,"ExtensionTest::testAntiXssKeepStyles#Twig function":0.002,"ExtensionTest::testAntiXssKeepStyles#Twig filter":0.002}}
