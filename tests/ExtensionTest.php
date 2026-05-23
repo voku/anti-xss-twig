@@ -1,17 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+use Twig\Environment;
+use Twig\Loader\ArrayLoader;
 use voku\helper\AntiXSS;
 use voku\twig\AntiXssExtension;
 
-/**
- * Class ExtensionTest
- */
-class ExtensionTest extends \PHPUnit\Framework\TestCase
+final class ExtensionTest extends TestCase
 {
-  /**
-   * @return array
-   */
-  public function htmlWithStylesProvider()
+  public static function htmlWithStylesProvider(): array
   {
     $original = '<a style="color: red;" href="' . "\x0java\00script:alert(1)" . '">CLICK<a>';
     $cleanHtmlTag = '<a style="color: red;" href="alert&#40;1&#41;">CLICK<a>';
@@ -35,10 +35,7 @@ class ExtensionTest extends \PHPUnit\Framework\TestCase
     return $testData;
   }
 
-  /**
-   * @return array
-   */
-  public function htmlProvider()
+  public static function htmlProvider(): array
   {
     $originalTag = '<a style="color: red;" href="' . "\x0java\0script:alert(1)" . '">CLICK<a><p>lall</p> \'Hello, i try to <script>alert(\'Hack\');</script> your site" ads="onClick();" 555-666-0606" K696=TobD([!+!]) ody=\"\'';
     $original = '<a style="color: red;" href="\u0001java\u0003script:alert(1)\">CLICK<a>';
@@ -66,33 +63,21 @@ class ExtensionTest extends \PHPUnit\Framework\TestCase
     return $testData;
   }
 
-  /**
-   * @dataProvider htmlProvider
-   *
-   * @param $template
-   * @param $original
-   * @param $cleanHtml
-   */
-  public function testExtensionMethod($template, $original, $cleanHtml)
+  #[DataProvider('htmlProvider')]
+  public function testExtensionMethod(string $template, string $original, string $cleanHtml): void
   {
-    $loader = new \Twig_Loader_Array(['test' => $template]);
-    $twig = new \Twig_Environment($loader);
+    $loader = new ArrayLoader(['test' => $template]);
+    $twig = new Environment($loader);
     $antiXss = new AntiXSS();
     $twig->addExtension(new AntiXssExtension($antiXss));
     static::assertSame($cleanHtml, $twig->render('test'));
   }
 
-  /**
-   * @dataProvider htmlWithStylesProvider
-   *
-   * @param $template
-   * @param $original
-   * @param $cleanHtml
-   */
-  public function testAntiXssKeepStyles($template, $original, $cleanHtml)
+  #[DataProvider('htmlWithStylesProvider')]
+  public function testAntiXssKeepStyles(string $template, string $original, string $cleanHtml): void
   {
-    $loader = new \Twig_Loader_Array(['test' => $template]);
-    $twig = new \Twig_Environment($loader, ['debug' => true]);
+    $loader = new ArrayLoader(['test' => $template]);
+    $twig = new Environment($loader, ['debug' => true]);
     $antiXss = new AntiXSS();
     $antiXss->removeEvilAttributes(['style']); // allow style-attributes
     $twig->addExtension(new AntiXssExtension($antiXss));

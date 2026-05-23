@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.org/voku/anti-xss-twig.svg?branch=master)](https://travis-ci.org/voku/anti-xss-twig)
-[![Coverage Status](https://coveralls.io/repos/github/voku/anti-xss-twig/badge.svg?branch=master)](https://coveralls.io/github/voku/anti-xss-twig?branch=master)
+[![Tests](https://github.com/voku/anti-xss-twig/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/voku/anti-xss-twig/actions/workflows/tests.yml?query=branch%3Amaster)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/voku/anti-xss-twig/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/voku/anti-xss-twig/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c6e5213d2fc0421fa0923c992b6035c1)](https://www.codacy.com/app/voku/anti-xss-twig?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=voku/anti-xss-twig&amp;utm_campaign=Badge_Grade)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/7841fd87-ea3e-4ce2-9be8-e0100fbc1c25/mini.png)](https://insight.sensiolabs.com/projects/7841fd87-ea3e-4ce2-9be8-e0100fbc1c25)[![Latest Stable Version](https://poser.pugx.org/voku/anti-xss-twig/v/stable)](https://packagist.org/packages/voku/anti-xss-twig) 
@@ -11,7 +10,7 @@
 
 ## Description
 
-A [Twig](http://twig.sensiolabs.org/) extension for [voku/anti-xss](https://github.com/voku/anti-xss).
+A [Twig](https://twig.symfony.com/) extension for [voku/anti-xss](https://github.com/voku/anti-xss).
 
 Currently supported Twig features are:
 
@@ -37,13 +36,18 @@ composer require voku/anti-xss-twig
 
 ## Usage
 
+This package targets modern PHP and Twig 3.x setups.
+
 First register the extension with Twig:
 
 ```php
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
 use voku\helper\AntiXSS;
 use voku\twig\AntiXssExtension;
 
-$twig = new Twig_Environment($loader);
+$loader = new FilesystemLoader('/path/to/templates');
+$twig = new Environment($loader);
 $antiXss = new AntiXSS();
 $twig->addExtension(new AntiXssExtension($antiXss));
 ```
@@ -56,6 +60,12 @@ Then use it in your templates:
 
 ```php
 $twig->addExtension(new AntiXssExtension($antiXss));
+```
+
+Run the test suite with:
+
+```sh
+composer test
 ```
 
 ## History

@@ -4,72 +4,45 @@ declare(strict_types=1);
 
 namespace voku\twig;
 
+use Stringable;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
 use voku\helper\AntiXSS;
 
-/**
- * Class AntiXssExtension
- */
-class AntiXssExtension extends \Twig_Extension
+final class AntiXssExtension extends AbstractExtension
 {
-  /**
-   * @var array
-   */
-  private $options = [
+  private array $options = [
       'is_safe'           => ['html'],
       'needs_environment' => false,
   ];
 
-  /**
-   * @var callable
-   */
-  private $callable;
+  private AntiXSS $antiXss;
 
-  /**
-   * @var AntiXss
-   */
-  private $antiXss;
-
-  /**
-   * AntiXssExtension constructor.
-   *
-   * @param AntiXSS $antiXss
-   */
   public function __construct(AntiXSS $antiXss)
   {
     $this->antiXss = $antiXss;
-    $this->callable = [$this, 'xss_clean'];
   }
 
-  /**
-   * @param string $html
-   *
-   * @return mixed
-   */
-  public function xss_clean($html)
+  public function xssClean(string|Stringable $html): string
   {
-    return $this->antiXss->xss_clean($html);
+    return $this->antiXss->xss_clean((string) $html);
   }
 
-  /** @noinspection PhpMissingParentCallCommonInspection */
-  /**
-   * @return array
-   */
   public function getFilters(): array
   {
     return [
-        new \Twig_SimpleFilter('xss_clean', $this->callable, $this->options),
+        new TwigFilter('xss_clean', [$this, 'xssClean'], $this->options),
     ];
   }
 
-  /** @noinspection PhpMissingParentCallCommonInspection */
   public function getFunctions(): array
   {
     return [
-        new \Twig_SimpleFunction('xss_clean', $this->callable, $this->options),
+        new TwigFunction('xss_clean', [$this, 'xssClean'], $this->options),
     ];
   }
 
-  /** @noinspection PhpMissingParentCallCommonInspection */
   public function getTokenParsers(): array
   {
     return [

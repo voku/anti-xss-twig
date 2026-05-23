@@ -1,0 +1,45 @@
+name: tests
+
+on:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ['8.1', '8.2', '8.3', '8.4']
+        dependencies: [highest]
+        include:
+          - php-version: '8.1'
+            dependencies: lowest
+
+    name: PHP ${{ matrix.php-version }} / ${{ matrix.dependencies }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          coverage: none
+
+      - uses: ramsey/composer-install@v3
+        if: matrix.dependencies == 'highest'
+        with:
+          composer-options: --no-interaction --prefer-dist
+
+      - name: Install lowest dependencies
+        if: matrix.dependencies == 'lowest'
+        run: composer update --no-interaction --prefer-dist --prefer-lowest --prefer-stable
+
+      - name: Validate composer metadata
+        run: composer validate --strict
+
+      - name: Run tests
+        run: composer test
