@@ -69,6 +69,17 @@ class ExtensionTest extends \PHPUnit\Framework\TestCase
     return $testData;
   }
 
+  /**
+   * @return array<string, array{0: string, 1: null, 2: string}>
+   */
+  public static function nullInputProvider(): array
+  {
+    return [
+        'Twig function' => ['{{ xss_clean(input) }}', null, ''],
+        'Twig filter'   => ['{{ input | xss_clean }}', null, ''],
+    ];
+  }
+
   #[DataProvider('htmlProvider')]
   public function testExtensionMethod(string $template, string $original, string $cleanHtml): void
   {
@@ -88,5 +99,15 @@ class ExtensionTest extends \PHPUnit\Framework\TestCase
     $antiXss->removeEvilAttributes(['style']); // allow style-attributes
     $twig->addExtension(new AntiXssExtension($antiXss));
     static::assertSame($cleanHtml, $twig->render('test'));
+  }
+
+  #[DataProvider('nullInputProvider')]
+  public function testNullInputReturnsEmptyString(string $template, ?string $input, string $cleanHtml): void
+  {
+    $loader = new ArrayLoader(['test' => $template]);
+    $twig = new Environment($loader);
+    $twig->addExtension(new AntiXssExtension(new AntiXSS()));
+
+    static::assertSame($cleanHtml, $twig->render('test', ['input' => $input]));
   }
 }

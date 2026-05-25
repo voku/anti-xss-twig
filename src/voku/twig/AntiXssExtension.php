@@ -35,10 +35,14 @@ class AntiXssExtension extends AbstractExtension
   }
 
   /**
-   * @param string $html
+   * @param string|null $html
    */
-  public function xss_clean(string $html): string
+  public function xss_clean(?string $html): string
   {
+    if ($html === null) {
+      return '';
+    }
+
     return $this->antiXss->xss_clean($html);
   }
 
