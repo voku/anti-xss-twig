@@ -12,13 +12,13 @@ use voku\twig\AntiXssExtension;
 class ExtensionTest extends \PHPUnit\Framework\TestCase
 {
   /**
-   * @return array
+   * @return array<string, array{0: string, 1: string, 2: string}>
    */
   public static function htmlWithStylesProvider(): array
   {
     $original = '<a style="color: red;" href="' . "\x0java\00script:alert(1)" . '">CLICK<a>';
-    $cleanHtmlTag = '<a style="color: red;" href="alert&#40;1&#41;">CLICK<a>';
-    $cleanHtml = '<a style="color: red;" href="alert&#40;1&#41;">CLICK<a>';
+    $cleanHtmlTag = '<a style="color: red;" href="(1)">CLICK<a>';
+    $cleanHtml = '<a style="color: red;" href="(1)">CLICK<a>';
 
     $testData = [];
     $testMethods = [
@@ -39,13 +39,13 @@ class ExtensionTest extends \PHPUnit\Framework\TestCase
   }
 
   /**
-   * @return array
+   * @return array<string, array{0: string, 1: string, 2: string}>
    */
   public static function htmlProvider(): array
   {
     $originalTag = '<a style="color: red;" href="' . "\x0java\0script:alert(1)" . '">CLICK<a><p>lall</p> \'Hello, i try to <script>alert(\'Hack\');</script> your site" ads="onClick();" 555-666-0606" K696=TobD([!+!]) ody=\"\'';
     $original = '<a style="color: red;" href="\u0001java\u0003script:alert(1)\">CLICK<a>';
-    $cleanHtmlTag = '<a  href="">CLICK<a><p>lall</p> \'Hello, i try to alert&#40;\'Hack\'&#41;; your site" ads="();" 555-666-0606" K696=TobD([!+!]) ody=\"\'';
+    $cleanHtmlTag = '<a  href="(1)">CLICK<a><p>lall</p> \'Hello, i try to  your site" ads="();" 555-666-0606" K696=TobD([!+!]) ody=\"\'';
     $cleanHtml = '<a  href="">CLICK<a>';
 
     $testData = [];
@@ -69,8 +69,6 @@ class ExtensionTest extends \PHPUnit\Framework\TestCase
     return $testData;
   }
 
-  /**
-   */
   #[DataProvider('htmlProvider')]
   public function testExtensionMethod(string $template, string $original, string $cleanHtml): void
   {

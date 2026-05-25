@@ -25,7 +25,7 @@
     }
   },
   "require": {
-    "php": "^8.1",
+    "php": "^8.2",
     "twig/twig": "^3.14",
     "voku/anti-xss": "^4.1.43"
   },

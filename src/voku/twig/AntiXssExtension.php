@@ -44,7 +44,7 @@ class AntiXssExtension extends AbstractExtension
 
   /** @noinspection PhpMissingParentCallCommonInspection */
   /**
-   * @return array
+   * @return array<int, TwigFilter>
    */
   public function getFilters(): array
   {
@@ -54,6 +54,9 @@ class AntiXssExtension extends AbstractExtension
   }
 
   /** @noinspection PhpMissingParentCallCommonInspection */
+  /**
+   * @return array<int, TwigFunction>
+   */
   public function getFunctions(): array
   {
     return [

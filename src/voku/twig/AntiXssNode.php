@@ -14,6 +14,9 @@ class AntiXssNode extends Node
 {
   /**
    * AntiXssNode constructor.
+   *
+   * @param array<string, Node> $nodes
+   * @param array<string, mixed> $attributes
    */
   public function __construct(array $nodes = [], array $attributes = [], int $lineno = 0, ?string $tag = null)
   {
