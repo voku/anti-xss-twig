@@ -16,7 +16,7 @@
   "authors": [
     {
       "name": "Lars Moelleken",
-      "homepage": "http://www.moelleken.org/"
+      "homepage": "https://www.moelleken.org/"
     }
   ],
   "autoload": {
@@ -34,11 +34,11 @@
     "phpunit/phpunit": "^11.5"
   },
   "scripts": {
-    "phpstan": "phpstan analyse --memory-limit=1G",
-    "test": "phpunit --configuration phpunit.xml",
-    "validate": [
+    "check": [
       "@phpstan",
       "@test"
-    ]
+    ],
+    "phpstan": "phpstan analyse --memory-limit=1G",
+    "test": "phpunit --configuration phpunit.xml"
   }
 }
