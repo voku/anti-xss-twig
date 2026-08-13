@@ -4,6 +4,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+- replace legacy Travis CI / CircleCI setup with GitHub Actions for PHPUnit and PHPStan
+- modernize dependency stack (Twig 3, PHPUnit 11, PHPStan 2, PHP >= 8.1)
+
 ## [3.0.1] - 2018-10-28
 ### Changed
 - update AntiXSS from v4.0 -> v4.1
@@ -31,4 +35,3 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.0.0] - 2017-03-22
 ### Changed
 - init 
-
