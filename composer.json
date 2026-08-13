@@ -9,11 +9,14 @@
     "XSS"
   ],
   "type": "library",
+  "config": {
+    "sort-packages": true
+  },
   "license": "MIT",
   "authors": [
     {
       "name": "Lars Moelleken",
-      "homepage": "http://www.moelleken.org/"
+      "homepage": "https://www.moelleken.org/"
     }
   ],
   "autoload": {
@@ -22,11 +25,20 @@
     }
   },
   "require": {
-    "php": ">=7.0.0",
-    "voku/anti-xss": "~4.1",
-    "twig/twig": "^1.26|~2.0"
+    "php": "^8.2",
+    "twig/twig": "^3.14",
+    "voku/anti-xss": "^4.1.43"
   },
   "require-dev": {
-    "phpunit/phpunit": "~6.0"
+    "phpstan/phpstan": "^2.1",
+    "phpunit/phpunit": "^11.5"
+  },
+  "scripts": {
+    "check": [
+      "@phpstan",
+      "@test"
+    ],
+    "phpstan": "phpstan analyse --memory-limit=1G",
+    "test": "phpunit --configuration phpunit.xml"
   }
 }

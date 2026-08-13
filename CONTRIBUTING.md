@@ -12,11 +12,17 @@ review and pull in new features or improvements individually.
 
 ## Style Guide
 
-All pull requests must adhere to the [PSR-2 standard](https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md).
+All pull requests must adhere to the [PSR-12 standard](https://www.php-fig.org/psr/psr-12/).
 
 ## Unit Testing
 
-All pull requests must be accompanied by passing PHPUnit unit tests and
-complete code coverage.
+All pull requests must be accompanied by passing PHPUnit unit tests.
 
 [Learn about PHPUnit](https://github.com/sebastianbergmann/phpunit/)
+
+Run the current test suite with:
+
+```sh
+composer install
+composer test
+```
