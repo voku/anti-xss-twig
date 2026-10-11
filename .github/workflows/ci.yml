@@ -35,7 +35,7 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
           coverage: none
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@4.0.0
       - name: Run PHPUnit
         run: composer test
 
@@ -48,6 +48,6 @@ jobs:
         with:
           php-version: '8.5'
           coverage: none
-      - uses: ramsey/composer-install@v3
+      - uses: ramsey/composer-install@4.0.0
       - name: Run PHPStan
         run: composer phpstan
